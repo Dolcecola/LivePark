@@ -1,0 +1,41 @@
+#caja {
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+}
+
+#miTexto {
+    -fx-font-family: "Roboto";
+    -fx-font-size: 14;
+}
+
+#reserva {
+    -fx-font-family: "Arial";
+    -fx-font-size: 50;
+}
+
+#miBoton {
+    -fx-background-color: #35446D; /* Color de fondo */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-size: 16px; /* Tamaño de la fuente */
+    -fx-font-family: Arial; /* Fuente de la letra */
+    /*-fx-border-color: #35446D; /* Color del borde */
+    -fx-border-radius: 5px; /* Radio de los bordes */
+    -fx-padding: 8px 16px; /* Espaciado interior */
+}
+
+#miBoton:hover {
+    -fx-background-color: #45a049; /* Color de fondo al pasar el ratón */
+}
+
+
+#custom-date-picker .date-cell {
+    -fx-font-size: 16px; /* Cambia el tamaño de fuente de las celdas de fecha */
+}
+
+#custom-date-picker .text-field {
+    -fx-font-size: 18px; /* Cambia el tamaño de fuente de las celdas de fecha */
+}
+
+#custom-date-picker .arrow-button {
+    -fx-font-size: 18px; /* Cambia el tamaño de fuente de las celdas de fecha */
+}
