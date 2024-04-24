@@ -38,13 +38,15 @@ public class VentanaReserva extends Application {
 
         hora_incio.setLayoutX(25);
         hora_incio.setLayoutY(450);
-        hora_incio.setPrefWidth(250);
+        hora_incio.setPrefWidth(200);
         hora_incio.setPrefHeight(35);
+        hora_incio.setPromptText("Hora de inicio");
 
         hora_fin.setLayoutX(25);
         hora_fin.setLayoutY(500);
-        hora_fin.setPrefWidth(250);
+        hora_fin.setPrefWidth(200);
         hora_fin.setPrefHeight(35);
+        hora_fin.setPromptText("Hora final");
 
         finalizar.setId("miBoton");
         finalizar.setLayoutX(250);

@@ -68,19 +68,23 @@ public class VentanaBuscarPlaza extends Application {
 
             Text calle = new Text("Calle de Génova, 17, Chamberí, 28004 Madrid");
             Text plazas = new Text("Plazas disponibles: 60");
+            Text coste = new Text("16€/h");
             Button reservar = new Button("Reservar");
             reservar.setId("miBoton");
             calle.setId("miTexto");
             plazas.setId("miTexto");
+            coste.setId("miTexto");
             reservar.setVisible(false);
             calle.setVisible(false);
             plazas.setVisible(false);
+            coste.setVisible(false);
 
             Duration delay = Duration.seconds(0.5);
             KeyFrame keyFrame = new KeyFrame(delay, evento -> {
                 calle.setVisible(true);
                 plazas.setVisible(true);
                 reservar.setVisible(true);
+                coste.setVisible(true);
             });
             Timeline timeline = new Timeline(keyFrame);
             timeline.play();
@@ -91,12 +95,13 @@ public class VentanaBuscarPlaza extends Application {
             calle.setFill(Color.WHITE);
             calle.setLayoutX(30);
             calle.setLayoutY(400);
+            coste.setFill(Color.WHITE);
+            coste.setLayoutX(30);
+            coste.setLayoutY(500);
             reservar.setLayoutX(250);
             reservar.setLayoutY(550);
 
-            layout.getChildren().add(calle);
-            layout.getChildren().add(plazas);
-            layout.getChildren().add(reservar);
+            layout.getChildren().addAll(calle,plazas,reservar,coste);
 
         });
 

@@ -1,10 +1,8 @@
 package com.example.liveparkgood;
 
 import javafx.application.Application;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,10 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-public class HelloApplication extends Application {
+public class VentanaPrimera extends Application {
 
     public static void main(String[] args){
         launch(args);
@@ -153,7 +148,7 @@ public class HelloApplication extends Application {
         });
 
         layout.setBackground(fondo);
-        layout.getChildren().addAll(logo,nombre,contraseña,esconder,inicio,crear_sesion,olvidar);
+        layout.getChildren().addAll(logo,nombre,contraseña,esconder,inicio,crear_sesion);
 
         Scene scene = new Scene(layout,370,620);
         stage.setScene(scene);

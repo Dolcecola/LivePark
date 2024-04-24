@@ -83,6 +83,5 @@ public class VentanaPrincipal extends Application {
         Scene ventana = new Scene(layout, 370,620);
         stage.setScene(ventana);
         stage.show();
-
     }
 }
