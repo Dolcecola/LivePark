@@ -3,6 +3,7 @@ package com.example.liveparkgood;
 import javafx.application.Application;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.io.ByteArrayInputStream;
+import java.util.List;
 
 public class VentanaPrincipal extends Application {
 
@@ -29,6 +33,8 @@ public class VentanaPrincipal extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        CapaIntermedia ci = new CapaIntermedia();
+        stage.setResizable(false);
 
         BackgroundFill colorFondo = new BackgroundFill(azul,null,null);
         Background fondo = new Background(colorFondo);
@@ -47,18 +53,55 @@ public class VentanaPrincipal extends Application {
         perfil.setLayoutY(y);
         perfil.setPrefWidth(ancho);
         perfil.setPrefHeight(alto);
+        perfil.setOnMouseClicked(event -> {
+            VentanaPerfil vp = new VentanaPerfil();
+            vp.InitComponents();
+        });
 
         plaza.setLayoutX(x);
         plaza.setLayoutY(y+=50);
         plaza.setPrefWidth(ancho);
         plaza.setPrefHeight(alto);
+        plaza.setOnMouseClicked(event -> {
+            boolean comp = ci.comprobarReserva();
+            if(!comp){
+                VentanaBuscarPlaza vbp = new VentanaBuscarPlaza();
+                vbp.InitComponents();
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Advertencia");
+                alert.setHeaderText(null);
+                alert.setContentText("Ya ha reserva estacionamiento");
+                alert.showAndWait();
+            }
+        });
 
         detalles.setLayoutX(x);
         detalles.setLayoutY(y+=50);
         detalles.setPrefWidth(ancho);
         detalles.setPrefHeight(alto);
+        detalles.setOnMouseClicked(event -> {
 
-        Image image = new Image("C:\\ProgramacionAvanzada\\LiveParkGood\\imagenes\\monstruo.png");
+            boolean comp = ci.comprobarReserva();
+            if(comp){
+                VentanaDetallesPlaza vdp = new VentanaDetallesPlaza();
+                vdp.InitComponents();
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Advertencia");
+                alert.setHeaderText(null);
+                alert.setContentText("Debe realizar una reserva para \n" + "tener acceso a esta ventana");
+                alert.showAndWait();
+            }
+
+        });
+
+        List<Tabla> temp = ci.leerImagenes();
+        ByteArrayInputStream imagen1 = temp.get(2).getImagen();
+
+        Image image = new Image(imagen1);
         Circle circle = new Circle(185,150,120);
         Circle fondo_perfil = new Circle(185,150,120);
         fondo_perfil.setFill(Color.WHITE);

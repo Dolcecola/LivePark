@@ -2,6 +2,7 @@ package com.example.liveparkgood;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -16,6 +17,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Scanner;
+
 public class VentanaPrimera extends Application {
 
     public static void main(String[] args){
@@ -26,11 +34,11 @@ public class VentanaPrimera extends Application {
 
     @Override
     public void start(Stage stage){
-        stage.setTitle("LivePark");
 
+        stage.setTitle("LivePark");
+        stage.setResizable(false);
         Pane layout = new Pane();
         Text texto = new Text("Bienvenido!");
-        Text olvidar = new Text("Olvidaste tu contraseña?");
         TextField nombre = new TextField();
         PasswordField contraseña = new PasswordField();
         Button inicio = new Button("Iniciar Sesión");
@@ -38,12 +46,17 @@ public class VentanaPrimera extends Application {
         ImageView logo = new ImageView();
         ImageView esconder = new ImageView();
 
-        Image imagen = new Image("C:\\ProgramacionAvanzada\\ZZZZ\\imagenes\\logo.jpg");
+        CapaIntermedia ci = new CapaIntermedia();
+        List<Tabla> temp = ci.leerImagenes();
+        ByteArrayInputStream imagen1 = temp.get(0).getImagen();
+        ByteArrayInputStream imagen2 = temp.get(1).getImagen();
+
+        Image imagen = new Image(imagen1);
         logo.setImage(imagen);
         logo.setX(-5);
         logo.setY(-200);
 
-        Image ojo = new Image("C:\\ProgramacionAvanzada\\LiveParkGood\\imagenes\\ver.png");
+        Image ojo = new Image(imagen2);
         esconder.setImage(ojo);
         esconder.setX(310);
         esconder.setY(305);
@@ -89,23 +102,11 @@ public class VentanaPrimera extends Application {
         nombre.setPrefHeight(35);
         nombre.setPromptText("Nombre");
 
-        nombre.setOnMouseClicked(mouseEvent -> {
-            if (nombre.getText().equals("")) {
-                nombre.clear();
-            }
-        });
-
         contraseña.setLayoutX(20);
         contraseña.setLayoutY(300);
         contraseña.setPrefWidth(325);
         contraseña.setPrefHeight(35);
         contraseña.setPromptText("Contraseña");
-
-        contraseña.setOnMouseClicked(mouseEvent -> {
-            if (nombre.getText().equals("")) {
-                nombre.clear();
-            }
-        });
 
         inicio.setLayoutX(20);
         inicio.setLayoutY(350);
@@ -114,10 +115,34 @@ public class VentanaPrimera extends Application {
 
         inicio.setOnMouseClicked(event ->{
 
-            VentanaPrincipal x = new VentanaPrincipal();
-            x.InitComponents();
-            stage.close();
+            String n = nombre.getText();
+            String pass = contraseña.getText();
 
+            if(n.isEmpty() || pass.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fatal Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Error: Complete los campos");
+                alert.showAndWait();
+
+            } else {
+
+                boolean comp = ci.leerDatosUsuario(n,pass);
+                if(comp){
+
+                    DatosCompartidos.setNombre(n);
+                    VentanaPrincipal x = new VentanaPrincipal();
+                    x.InitComponents();
+                    stage.close();
+
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Fatal Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Error: Usuario no encontrado!");
+                    alert.showAndWait();
+                }
+            }
         });
 
         crear_sesion.setLayoutX(185);
@@ -129,22 +154,6 @@ public class VentanaPrimera extends Application {
 
             VentanaCrearSesion x = new VentanaCrearSesion();
             x.InitComponents();
-            stage.close();
-
-        });
-
-        olvidar.setX(100);
-        olvidar.setY(420);
-        olvidar.setFill(Color.web("#28262C"));
-        olvidar.setFont(new Font(16));
-
-        olvidar.setOnMouseEntered(event -> {
-            olvidar.setUnderline(true);
-        });
-
-        // Eliminar el subrayado cuando el mouse sale del texto
-        olvidar.setOnMouseExited(event -> {
-            olvidar.setUnderline(false);
         });
 
         layout.setBackground(fondo);

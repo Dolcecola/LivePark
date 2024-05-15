@@ -2,6 +2,7 @@ package com.example.liveparkgood;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -29,6 +30,8 @@ public class VentanaCrearSesion extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setResizable(false);
+        CapaIntermedia ci = new CapaIntermedia();
         BackgroundFill colorFondo = new BackgroundFill(verde,null,null);
         Background fondo = new Background(colorFondo);
         Pane layout = new Pane();
@@ -37,7 +40,6 @@ public class VentanaCrearSesion extends Application {
         int coordY = 200;
         int widht = 330;
         int height = 40;
-
 
         TextField nombre = new TextField();
         TextField email = new TextField();
@@ -56,6 +58,30 @@ public class VentanaCrearSesion extends Application {
         registrar.setLayoutY(coordY+250);
         registrar.setPrefWidth(widht);
         registrar.setPrefHeight(height);
+        registrar.setOnMouseClicked(event -> {
+
+            String n = nombre.getText();
+            String c = contraseña.getText();
+            String e = email.getText();
+            String t = telefono.getText();
+
+            if(ci.crearUsuario(n,c,e,t,box)){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Información");
+                alert.setHeaderText(null);
+                alert.setContentText("Usuario creado con éxito");
+                alert.showAndWait();
+
+                stage.close();
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fatal Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Error: Usuario con nombre en uso");
+                alert.showAndWait();
+            }
+        });
 
         bienvenido.setFont(Font.font("Montserrat",40));
         bienvenido.setX(85);
